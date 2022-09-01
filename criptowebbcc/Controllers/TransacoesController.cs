@@ -9,95 +9,85 @@ using criptowebbcc.Models;
 
 namespace criptowebbcc.Controllers
 {
-    public class ClientesController : Controller
+    public class TransacoesController : Controller
     {
         private readonly Contexto _context;
 
-        public ClientesController(Contexto context)
+        public TransacoesController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Clientes
+        // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-              return View(await _context.clientes.ToListAsync());
+              return View(await _context.transacoes.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Transacoes/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes
+            var transacao = await _context.transacoes
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (cliente == null)
+            if (transacao == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(transacao);
         }
 
-        // GET: Clientes/Create
+        // GET: Transacoes/Create
         public IActionResult Create()
         {
-            var estado = Enum.GetValues(typeof(Estado))
-              .Cast<Estado>()
-              .Select(e => new SelectListItem
-              {
-                  Value = e.ToString(),
-                  Text = e.ToString()
-              });
-
-            ViewBag.vbEstado = estado;
-
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Transacoes/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("id,data,quantidade,valor,operacao")] Transacao transacao)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cliente);
+                _context.Add(transacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(transacao);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Transacoes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes.FindAsync(id);
-            if (cliente == null)
+            var transacao = await _context.transacoes.FindAsync(id);
+            if (transacao == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+            return View(transacao);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Transacoes/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("id,data,quantidade,valor,operacao")] Transacao transacao)
         {
-            if (id != cliente.id)
+            if (id != transacao.id)
             {
                 return NotFound();
             }
@@ -106,12 +96,12 @@ namespace criptowebbcc.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    _context.Update(transacao);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.id))
+                    if (!TransacaoExists(transacao.id))
                     {
                         return NotFound();
                     }
@@ -122,49 +112,49 @@ namespace criptowebbcc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(transacao);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Transacoes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.transacoes == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes
+            var transacao = await _context.transacoes
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (cliente == null)
+            if (transacao == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(transacao);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Transacoes/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.clientes == null)
+            if (_context.transacoes == null)
             {
-                return Problem("Entity set 'Contexto.clientes'  is null.");
+                return Problem("Entity set 'Contexto.transacoes'  is null.");
             }
-            var cliente = await _context.clientes.FindAsync(id);
-            if (cliente != null)
+            var transacao = await _context.transacoes.FindAsync(id);
+            if (transacao != null)
             {
-                _context.clientes.Remove(cliente);
+                _context.transacoes.Remove(transacao);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteExists(int id)
+        private bool TransacaoExists(int id)
         {
-          return _context.clientes.Any(e => e.id == id);
+          return _context.transacoes.Any(e => e.id == id);
         }
     }
 }

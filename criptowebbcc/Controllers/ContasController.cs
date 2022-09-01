@@ -9,95 +9,85 @@ using criptowebbcc.Models;
 
 namespace criptowebbcc.Controllers
 {
-    public class ClientesController : Controller
+    public class ContasController : Controller
     {
         private readonly Contexto _context;
 
-        public ClientesController(Contexto context)
+        public ContasController(Contexto context)
         {
             _context = context;
         }
 
-        // GET: Clientes
+        // GET: Contas
         public async Task<IActionResult> Index()
         {
-              return View(await _context.clientes.ToListAsync());
+              return View(await _context.contas.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Contas/Details/5
         public async Task<IActionResult> Details(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes
+            var conta = await _context.contas
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (cliente == null)
+            if (conta == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(conta);
         }
 
-        // GET: Clientes/Create
+        // GET: Contas/Create
         public IActionResult Create()
         {
-            var estado = Enum.GetValues(typeof(Estado))
-              .Cast<Estado>()
-              .Select(e => new SelectListItem
-              {
-                  Value = e.ToString(),
-                  Text = e.ToString()
-              });
-
-            ViewBag.vbEstado = estado;
-
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Contas/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Create([Bind("id,quantidade")] Conta conta)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(cliente);
+                _context.Add(conta);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(conta);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Contas/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes.FindAsync(id);
-            if (cliente == null)
+            var conta = await _context.contas.FindAsync(id);
+            if (conta == null)
             {
                 return NotFound();
             }
-            return View(cliente);
+            return View(conta);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Contas/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to.
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,nome,cidade,estado,idade")] Cliente cliente)
+        public async Task<IActionResult> Edit(int id, [Bind("id,quantidade")] Conta conta)
         {
-            if (id != cliente.id)
+            if (id != conta.id)
             {
                 return NotFound();
             }
@@ -106,12 +96,12 @@ namespace criptowebbcc.Controllers
             {
                 try
                 {
-                    _context.Update(cliente);
+                    _context.Update(conta);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!ClienteExists(cliente.id))
+                    if (!ContaExists(conta.id))
                     {
                         return NotFound();
                     }
@@ -122,49 +112,49 @@ namespace criptowebbcc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(cliente);
+            return View(conta);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Contas/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
-            if (id == null || _context.clientes == null)
+            if (id == null || _context.contas == null)
             {
                 return NotFound();
             }
 
-            var cliente = await _context.clientes
+            var conta = await _context.contas
                 .FirstOrDefaultAsync(m => m.id == id);
-            if (cliente == null)
+            if (conta == null)
             {
                 return NotFound();
             }
 
-            return View(cliente);
+            return View(conta);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Contas/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            if (_context.clientes == null)
+            if (_context.contas == null)
             {
-                return Problem("Entity set 'Contexto.clientes'  is null.");
+                return Problem("Entity set 'Contexto.contas'  is null.");
             }
-            var cliente = await _context.clientes.FindAsync(id);
-            if (cliente != null)
+            var conta = await _context.contas.FindAsync(id);
+            if (conta != null)
             {
-                _context.clientes.Remove(cliente);
+                _context.contas.Remove(conta);
             }
             
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool ClienteExists(int id)
+        private bool ContaExists(int id)
         {
-          return _context.clientes.Any(e => e.id == id);
+          return _context.contas.Any(e => e.id == id);
         }
     }
 }

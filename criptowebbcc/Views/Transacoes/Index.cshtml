@@ -1,29 +1,29 @@
-﻿@model IEnumerable<criptowebbcc.Models.Cliente>
+﻿@model IEnumerable<criptowebbcc.Models.Transacao>
 
 @{
     ViewData["Title"] = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h1>Listar Clientes</h1>
+<h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Adicionar Novo Cliente</a>
+    <a asp-action="Create">Create New</a>
 </p>
 <table class="table">
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model.nome)
+                @Html.DisplayNameFor(model => model.data)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.cidade)
+                @Html.DisplayNameFor(model => model.quantidade)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.estado)
+                @Html.DisplayNameFor(model => model.valor)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.idade)
+                @Html.DisplayNameFor(model => model.operacao)
             </th>
             <th></th>
         </tr>
@@ -32,16 +32,16 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.nome)
+                @Html.DisplayFor(modelItem => item.data)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.cidade)
+                @Html.DisplayFor(modelItem => item.quantidade)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.estado)
+                @Html.DisplayFor(modelItem => item.valor)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.idade)
+                @Html.DisplayFor(modelItem => item.operacao)
             </td>
             <td>
                 <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |

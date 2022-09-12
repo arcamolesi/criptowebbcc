@@ -5,7 +5,9 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<h4>Alterar Conta</h4>
+<h1>Edit</h1>
+
+<h4>Conta</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -14,12 +16,12 @@
             <input type="hidden" asp-for="id" />
             <div class="form-group">
                 <label asp-for="clienteid" class="control-label"></label>
-                <select asp-for="clienteid" class="form-control" asp-items="ViewBag.listaclientes"></select>
+                <select asp-for="clienteid" class="form-control" asp-items="ViewBag.clienteid"></select>
                 <span asp-validation-for="clienteid" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="moedaid" class="control-label"></label>
-                <select asp-for="moedaid" class="form-control" asp-items="ViewBag.listamoedas"></select>
+                <select asp-for="moedaid" class="form-control" asp-items="ViewBag.moedaid"></select>
                 <span asp-validation-for="moedaid" class="text-danger"></span>
             </div>
             <div class="form-group">
@@ -28,14 +30,14 @@
                 <span asp-validation-for="quantidade" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Gravar" class="btn btn-primary" />
+                <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Listar Contas</a>
+    <a asp-action="Index">Back to List</a>
 </div>
 
 @section Scripts {

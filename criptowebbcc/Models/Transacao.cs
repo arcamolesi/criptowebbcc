@@ -13,11 +13,14 @@ namespace criptowebbcc.Models
         [Display(Name = "ID: ")]
         public int id { get; set; }
 
+
         [Display(Name = "Conta: ")]
         public Conta conta { get; set; }
+        [ForeignKey("Conta")]
+        public int contaid { get; set; }
+
 
         [Display(Name = "Data: ")]
-        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy")]
         public DateTime data { get; set; }
 
         [Display(Name = "Quantidade: ")]
@@ -27,7 +30,29 @@ namespace criptowebbcc.Models
         [Display(Name = "Valor: ")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public float valor { get; set; }
-
+        
+        [Display(Name = "Valor: ")]
         public Operacao operacao { get; set; }
+
+        [Display(Name = "Total: ")]
+        [NotMapped]
+        [DisplayFormat(DataFormatString = "{0:C2}")]
+        public virtual float total
+        {
+            get { return quantidade * valor; }
+        }
+
+        [Display(Name = "Operacao: ")]
+        [NotMapped]
+        public virtual string tipoOperacao {
+
+            get { return (operacao == Operacao.Compra ? "Compra" : "Venda"); }
+         }
+
+        [Display(Name = "Conta: ")]
+        [NotMapped]
+        public virtual string nomeConta {
+            get { return (conta.id.ToString() + " - " + conta.cliente.nome + " - " + conta.moeda.descricao); }
+        }
     }
 }

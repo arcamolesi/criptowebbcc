@@ -45,6 +45,7 @@ namespace criptowebbcc.Controllers
         // GET: Clientes/Create
         public IActionResult Create()
         {
+
             var estado = Enum.GetValues(typeof(Estado))
               .Cast<Estado>()
               .Select(e => new SelectListItem
@@ -53,7 +54,7 @@ namespace criptowebbcc.Controllers
                   Text = e.ToString()
               });
 
-            ViewBag.vbEstado = estado;
+            ViewBag.bagEstado = estado;
 
             return View();
         }

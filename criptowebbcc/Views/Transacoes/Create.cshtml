@@ -15,7 +15,7 @@
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="contaid" class="control-label"></label>
-                <select asp-for="contaid" class="form-control" asp-items="ViewBag.contas"></select>
+                <select asp-for="contaid" class ="form-control" asp-items="ViewBag.contas"></select>
             </div>
             <div class="form-group">
                 <label asp-for="data" class="control-label"></label>
@@ -24,16 +24,17 @@
             </div>
             <div class="form-group">
                 <label asp-for="quantidade" class="control-label"></label>
-                <input asp-for="quantidade" class="form-control" />
-                <span asp-validation-for="quantidade" class="text-danger" id="quantidade" onblur="Calcular()"></span>
+                <input asp-for="quantidade" class="form-control" id="quantidade" onblur="Calcular()" />
+                <span asp-validation-for="quantidade" class="text-danger" ></span>
             </div>
             <div class="form-group">
                 <label asp-for="valor" class="control-label"></label>
                 <input asp-for="valor" class="form-control" id="valor" onblur="Calcular()" />
-                <span asp-validation-for="valor" class="text-danger"></span>
+                <span asp-validation-for="valor" class="text-danger" ></span>
             </div>
             <div class="form-group">
                 <label asp-for="operacao" class="control-label"></label>
+               
                 <select asp-for="operacao" asp-items="ViewBag.bagOperacao" class="form-control">
                     <option selected="selected" value="">Selecione um Elemento</option>
                 </select>
@@ -43,7 +44,7 @@
             <div class="form-group">
                 <label class="control-label"> Total: </label>
                 <span id="total"> </span>
-            </div> 
+            </div>
             <br />
 
             <div class="form-group">
@@ -61,15 +62,15 @@
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 
     <script>
-        function Calcular(){
+        function Calcular() {
             var qtde = Number(document.getElementById("quantidade").value);
             var valor = Number(document.getElementById("valor").value);
             var total = document.getElementById("total");
-            
-            if (total.textContent == undefined){
+
+            if (total.textContent == undefined) {
                 var calc = qtde * valor;
                 var f = calc.toLocaleString('pt-br', { style: 'currency', currency: 'BRL' });
-                total.textContent == f; 
+                total.textContent == f;
             }
             else {
                 var calc = qtde * valor;
@@ -77,6 +78,5 @@
                 total.innerText = f;
             }
         }
-
     </script>
 }

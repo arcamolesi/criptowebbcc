@@ -30,8 +30,8 @@ namespace criptowebbcc.Models
         [Display(Name = "Valor: ")]
         [DisplayFormat(DataFormatString = "{0:C2}")]
         public float valor { get; set; }
-        
-        [Display(Name = "Valor: ")]
+
+        [Display(Name = "Operação: ")]
         public Operacao operacao { get; set; }
 
         [Display(Name = "Total: ")]
@@ -44,15 +44,17 @@ namespace criptowebbcc.Models
 
         [Display(Name = "Operacao: ")]
         [NotMapped]
-        public virtual string tipoOperacao {
+        public virtual string tipoOperacao
+        {
 
             get { return (operacao == Operacao.Compra ? "Compra" : "Venda"); }
-         }
-
-        [Display(Name = "Conta: ")]
-        [NotMapped]
-        public virtual string nomeConta {
-            get { return (conta.id.ToString() + " - " + conta.cliente.nome + " - " + conta.moeda.descricao); }
         }
+
+        /*[Display(Name = "Conta: ")]
+        [NotMapped]
+        public virtual string nomeConta
+        {
+            get { return (conta.id.ToString() + " - " + conta.cliente.nome + " - " + conta.moeda.descricao); }
+        }*/
     }
 }

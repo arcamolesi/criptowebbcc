@@ -9,11 +9,11 @@ using criptowebbcc.Models;
 
 namespace criptowebbcc.Controllers
 {
-    public class Transacoes_v1Controller : Controller
+    public class TransacoesController : Controller
     {
         private readonly Contexto _context;
 
-        public Transacoes_v1Controller(Contexto context)
+        public TransacoesController(Contexto context)
         {
             _context = context;
         }
@@ -21,7 +21,8 @@ namespace criptowebbcc.Controllers
         // GET: Transacoes
         public async Task<IActionResult> Index()
         {
-            var contexto = _context.transacoes.Include(c => c.conta).Include(cli => cli.conta.cliente).Include(moe => moe.conta.moeda);
+            var contexto = _context.transacoes.Include(t => t.conta).
+                                      Include(c=>c.conta.cliente).Include(m =>m.conta.moeda);
             return View(await contexto.ToListAsync());
         }
 
@@ -34,6 +35,7 @@ namespace criptowebbcc.Controllers
             }
 
             var transacao = await _context.transacoes
+                .Include(t => t.conta)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (transacao == null)
             {
@@ -46,19 +48,16 @@ namespace criptowebbcc.Controllers
         // GET: Transacoes/Create
         public IActionResult Create()
         {
-
             var operacao = Enum.GetValues(typeof(Operacao))
-              .Cast<Operacao>()
-              .Select(e => new SelectListItem
-              {
-                  Value = e.ToString(),
-                  Text = e.ToString()
-              });
-            ViewBag.bagOperacao = operacao; 
+            .Cast<Operacao>()
+            .Select(e => new SelectListItem
+            {
+                Value = e.ToString(),
+                Text = e.ToString()
+            });
+            ViewBag.bagOperacao = operacao;
 
             ViewData["contas"] = new SelectList(_context.contas, "id", "quantidade");
-            
-
             return View();
         }
 
@@ -67,7 +66,7 @@ namespace criptowebbcc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("id,contaid, data,quantidade,valor,operacao")] Transacao transacao)
+        public async Task<IActionResult> Create([Bind("id,contaid,data,quantidade,valor,operacao")] Transacao transacao)
         {
             if (ModelState.IsValid)
             {
@@ -75,6 +74,7 @@ namespace criptowebbcc.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
@@ -91,6 +91,7 @@ namespace criptowebbcc.Controllers
             {
                 return NotFound();
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
@@ -99,7 +100,7 @@ namespace criptowebbcc.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("id,data,quantidade,valor,operacao")] Transacao transacao)
+        public async Task<IActionResult> Edit(int id, [Bind("id,contaid,data,quantidade,valor,operacao")] Transacao transacao)
         {
             if (id != transacao.id)
             {
@@ -126,6 +127,7 @@ namespace criptowebbcc.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
+            ViewData["contaid"] = new SelectList(_context.contas, "id", "id", transacao.contaid);
             return View(transacao);
         }
 
@@ -138,6 +140,7 @@ namespace criptowebbcc.Controllers
             }
 
             var transacao = await _context.transacoes
+                .Include(t => t.conta)
                 .FirstOrDefaultAsync(m => m.id == id);
             if (transacao == null)
             {

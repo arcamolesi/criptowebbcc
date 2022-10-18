@@ -22,7 +22,7 @@ namespace criptowebbcc.Models
         public int moedaid { get; set; }
 
         [Display(Name = "Quantidade: ")]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float quantidade { get; set; }
 
         public ICollection<Transacao> transacoes { get; set; }

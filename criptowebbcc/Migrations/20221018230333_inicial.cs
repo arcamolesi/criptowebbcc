@@ -5,73 +5,81 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace criptowebbcc.Migrations
 {
-    public partial class Inicial : Migration
+    public partial class inicial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "clientes",
+                name: "Clientes",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nome = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    cidade = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    nome = table.Column<string>(type: "nvarchar(35)", maxLength: 35, nullable: false),
+                    cidade = table.Column<string>(type: "nvarchar(25)", maxLength: 25, nullable: true),
                     estado = table.Column<int>(type: "int", nullable: false),
                     idade = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_clientes", x => x.id);
+                    table.PrimaryKey("PK_Clientes", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "moedas",
+                name: "Moedas",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    descricao = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    descricao = table.Column<string>(type: "nvarchar(40)", maxLength: 40, nullable: true),
+                    sigla = table.Column<string>(type: "nvarchar(7)", maxLength: 7, nullable: true),
                     compra = table.Column<float>(type: "real", nullable: false),
-                    venda = table.Column<float>(type: "real", nullable: false)
+                    venda = table.Column<float>(type: "real", nullable: false),
+                    capital = table.Column<float>(type: "real", nullable: false),
+                    vol24 = table.Column<float>(type: "real", nullable: false),
+                    voltotal = table.Column<float>(type: "real", nullable: false),
+                    var24h = table.Column<float>(type: "real", nullable: false),
+                    var7d = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_moedas", x => x.id);
+                    table.PrimaryKey("PK_Moedas", x => x.id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "contas",
+                name: "Contas",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    clienteid = table.Column<int>(type: "int", nullable: true),
-                    moedaid = table.Column<int>(type: "int", nullable: true),
+                    clienteid = table.Column<int>(type: "int", nullable: false),
+                    moedaid = table.Column<int>(type: "int", nullable: false),
                     quantidade = table.Column<float>(type: "real", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_contas", x => x.id);
+                    table.PrimaryKey("PK_Contas", x => x.id);
                     table.ForeignKey(
-                        name: "FK_contas_clientes_clienteid",
+                        name: "FK_Contas_Clientes_clienteid",
                         column: x => x.clienteid,
-                        principalTable: "clientes",
-                        principalColumn: "id");
+                        principalTable: "Clientes",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_contas_moedas_moedaid",
+                        name: "FK_Contas_Moedas_moedaid",
                         column: x => x.moedaid,
-                        principalTable: "moedas",
-                        principalColumn: "id");
+                        principalTable: "Moedas",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "transacoes",
+                name: "Transacoes",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    contaid = table.Column<int>(type: "int", nullable: true),
+                    contaid = table.Column<int>(type: "int", nullable: false),
                     data = table.Column<DateTime>(type: "datetime2", nullable: false),
                     quantidade = table.Column<float>(type: "real", nullable: false),
                     valor = table.Column<float>(type: "real", nullable: false),
@@ -79,43 +87,44 @@ namespace criptowebbcc.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_transacoes", x => x.id);
+                    table.PrimaryKey("PK_Transacoes", x => x.id);
                     table.ForeignKey(
-                        name: "FK_transacoes_contas_contaid",
+                        name: "FK_Transacoes_Contas_contaid",
                         column: x => x.contaid,
-                        principalTable: "contas",
-                        principalColumn: "id");
+                        principalTable: "Contas",
+                        principalColumn: "id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_contas_clienteid",
-                table: "contas",
+                name: "IX_Contas_clienteid",
+                table: "Contas",
                 column: "clienteid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_contas_moedaid",
-                table: "contas",
+                name: "IX_Contas_moedaid",
+                table: "Contas",
                 column: "moedaid");
 
             migrationBuilder.CreateIndex(
-                name: "IX_transacoes_contaid",
-                table: "transacoes",
+                name: "IX_Transacoes_contaid",
+                table: "Transacoes",
                 column: "contaid");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "transacoes");
+                name: "Transacoes");
 
             migrationBuilder.DropTable(
-                name: "contas");
+                name: "Contas");
 
             migrationBuilder.DropTable(
-                name: "clientes");
+                name: "Clientes");
 
             migrationBuilder.DropTable(
-                name: "moedas");
+                name: "Moedas");
         }
     }
 }

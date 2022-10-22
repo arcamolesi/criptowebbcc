@@ -109,7 +109,7 @@ namespace criptowebbcc.Controllers
                 contexto.SaveChanges();
 
             } while (reader.NextResult());
-
+            stream.Close(); 
             return View(contexto.moedas.ToList());
         }
 

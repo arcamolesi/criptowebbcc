@@ -57,7 +57,9 @@ namespace criptowebbcc.Controllers
             });
             ViewBag.bagOperacao = operacao;
 
-            ViewData["contas"] = new SelectList(_context.contas, "id", "id");
+            ViewData["contas"] = new SelectList(_context.contas, "id", "quantidade");
+            
+
             return View();
         }
 

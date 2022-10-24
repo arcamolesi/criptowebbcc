@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using criptowebbcc.Models;
-sdfasdfasd
+
 namespace criptowebbcc.Controllers
 {
     public class ContasController : Controller

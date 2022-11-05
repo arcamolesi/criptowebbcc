@@ -58,6 +58,8 @@ namespace criptowebbcc.Controllers
             ViewBag.bagOperacao = operacao;
 
             ViewData["contas"] = new SelectList(_context.contas, "id", "quantidade");
+            
+
             return View();
         }
 
@@ -70,6 +72,14 @@ namespace criptowebbcc.Controllers
         {
             if (ModelState.IsValid)
             {
+
+                Conta conta = _context.contas.Find(transacao.contaid);
+                if (transacao.operacao == Operacao.Compra)
+                    conta.quantidade = conta.quantidade + transacao.quantidade;
+                else conta.quantidade = conta.quantidade - transacao.quantidade;
+
+                _context.Update(conta); 
+
                 _context.Add(transacao);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));

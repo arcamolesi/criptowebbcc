@@ -1,0 +1,90 @@
+﻿@model IEnumerable<criptowebbcc.Models.Moeda>
+
+@{
+    ViewData["Title"] = "Moeda";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Moeda</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.sigla)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.compra)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.venda)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.capital)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.vol24)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.voltotal)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.var24h)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.var7d)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.sigla)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.compra)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.venda)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.capital)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.vol24)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.voltotal)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.var24h)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.var7d)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

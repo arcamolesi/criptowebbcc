@@ -1,0 +1,67 @@
+﻿@model IEnumerable<criptowebbcc.Models.Conta>
+
+@{
+    ViewData["Title"] = "Conta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Conta</h1>
+
+<p>
+    <a asp-action="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cliente.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.cliente.nome)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.moeda.id)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.moeda.descricao)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.quantidade)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cliente.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.cliente.nome)
+            </td>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.moeda.id)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.moeda.descricao)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.quantidade)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id">Edit</a> |
+                <a asp-action="Details" asp-route-id="@item.id">Details</a> |
+                <a asp-action="Delete" asp-route-id="@item.id">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

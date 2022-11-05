@@ -12,14 +12,14 @@ using criptowebbcc.Models;
 namespace criptowebbcc.Migrations
 {
     [DbContext(typeof(Contexto))]
-    [Migration("20220913235737_CorrecaoBanco")]
-    partial class CorrecaoBanco
+    [Migration("20221018230333_inicial")]
+    partial class inicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.8")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
@@ -86,6 +86,9 @@ namespace criptowebbcc.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("id"), 1L, 1);
 
+                    b.Property<float>("capital")
+                        .HasColumnType("real");
+
                     b.Property<float>("compra")
                         .HasColumnType("real");
 
@@ -93,7 +96,23 @@ namespace criptowebbcc.Migrations
                         .HasMaxLength(40)
                         .HasColumnType("nvarchar(40)");
 
+                    b.Property<string>("sigla")
+                        .HasMaxLength(7)
+                        .HasColumnType("nvarchar(7)");
+
+                    b.Property<float>("var24h")
+                        .HasColumnType("real");
+
+                    b.Property<float>("var7d")
+                        .HasColumnType("real");
+
                     b.Property<float>("venda")
+                        .HasColumnType("real");
+
+                    b.Property<float>("vol24")
+                        .HasColumnType("real");
+
+                    b.Property<float>("voltotal")
                         .HasColumnType("real");
 
                     b.HasKey("id");

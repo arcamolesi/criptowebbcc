@@ -24,7 +24,7 @@ namespace criptowebbcc.Models
         public DateTime data { get; set; }
 
         [Display(Name = "Quantidade: ")]
-        [DisplayFormat(DataFormatString = "{0:C2}")]
+        [DisplayFormat(DataFormatString = "{0:N2}")]
         public float quantidade { get; set; }
 
         [Display(Name = "Valor: ")]
